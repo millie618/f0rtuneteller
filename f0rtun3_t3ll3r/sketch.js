@@ -75,7 +75,11 @@ let  fortunes = ["Your future is full of possibilities and exciting adventures."
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
+  
 
+  vid = createVideo(['fortuneBGvid.mp4'], vidLoad);
+
+  vid2 = createVideo(['tellvid.mp4']);
  
   port = createSerial();
 
@@ -91,11 +95,6 @@ function setup() {
 max = fortunes.length;
 
 
-vid = createVideo(['fortuneBGvid.mp4'],
-vidLoad);
-vid.size(1920,1080);
-
-vid2 = createVideo(['tellvid.mp4']);
 
 }
 
@@ -151,6 +150,7 @@ lastTouch = touch;
   }
 
   tell();
+  //vid2load();
 }
 
 
@@ -243,3 +243,14 @@ function vidLoad() {
   vid.volume(0);
 }
 
+function vid2load(){
+  if (tell()) {
+   image(vid2,0,0);
+   
+  } else {
+    hide();
+  }
+
+
+
+}
