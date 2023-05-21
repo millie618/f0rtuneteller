@@ -1,5 +1,5 @@
 let button; 
-let rebutton;
+
 let img;
 let angle = 0
 let vid;
@@ -70,6 +70,7 @@ let  fortunes = ["Your future is full of possibilities and exciting adventures."
 
   function preload(){
 
+
   }
 
 function setup() {
@@ -80,7 +81,10 @@ function setup() {
   vid = createVideo(['fortuneBGvid.mp4'], vidLoad);
 
   vid2 = createVideo(['tellvid.mp4']);
+
+  vid2.hide();
  
+
   port = createSerial();
 
 
@@ -102,6 +106,9 @@ function draw() {
 background(0);
 image(vid,0,0);
 
+
+
+
 push()
 fill(255);
 rectMode(CENTER);
@@ -111,7 +118,7 @@ pop()
 
 textSize(60);
 fill(179,255,63);
-text('place_palm_on_the_orb', windowWidth/2,111);
+text('touch_the_orb', windowWidth/2,111);
 textAlign(CENTER,CENTER);
 
 // read the serial data. 
@@ -128,15 +135,27 @@ pop();
 
 //do something with the data
 
+if (touch == "touch") {//if touched
+  if (touch != lastTouch) {//make sure it doesn't repeat
+    index = round(random(0, max));
+    console.log("index: "+index);
 
+    background(0);
 
-if(touch=="touch"){ //if touched
-if(touch != lastTouch) { //make sure it doesn't repeat
-index = round(random(0,max));
-console.log("index: "+index);
-
+image(vid2,0,0);
+    vid2.show();
+    vid2.volume(0);
+  }
+} else if (touch == "no touch") {
+  if (vid2.elt.onended){
+  vid2.stop();
+  vid2.hide();
+ 
 }
 }
+
+
+
 else if (touch=="no touch"){ //if not touched
   console.log ('no touch');
 }
@@ -149,12 +168,23 @@ lastTouch = touch;
     connectBtn.html("Disconnect");
   }
 
-  tell();
-  //vid2load();
+   tell();
+  
+
+
+
+
+//tell();
+
+
+//if (tell()===true){
+ // image(vid2,0,0);
+//}
+//else{
+ // vid2.hide();
+//}
+
 }
-
-
-
 
 
 
@@ -163,7 +193,7 @@ lastTouch = touch;
 
 function tell(){
 
-
+//vid2load();
  
 //console.log(fortune);
 //refresh white rectangle 
@@ -244,13 +274,5 @@ function vidLoad() {
 }
 
 function vid2load(){
-  if (tell()) {
-   image(vid2,0,0);
-   
-  } else {
-    hide();
-  }
-
-
 
 }
